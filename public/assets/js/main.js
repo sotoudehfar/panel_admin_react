@@ -1,15 +1,7 @@
 window.addEventListener('DOMContentLoaded', (event) => {
 
 
-    document.getElementById('handle_toggle_sidemenu').addEventListener('change' , function(){
-        if (this.checked) {
-            document.querySelector('.mini_sidebar').classList.add('expanded')
-            document.getElementById('content_section').classList.add('with_sidebar')
-        }else{
-            document.querySelector('.mini_sidebar').classList.remove('expanded')
-            document.getElementById('content_section').classList.remove('with_sidebar')
-        }
-    })
+
 
     let sidebarItms = document.querySelectorAll('.sidebar_menu_item');
     for (const item of sidebarItms) {
@@ -83,11 +75,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
         },
     };
 
-    const ctx = document.getElementById('myChart').getContext('2d');
-    new Chart(ctx , config)
+    // const ctx = document.getElementById('myChart').getContext('2d');
+    // new Chart(ctx , config)
+const canvas = document.getElementById('myChart');
 
-
-
+if (canvas) {
+  const ctx = canvas.getContext('2d');
+  new Chart(ctx, config);
+}
     
 });
 

@@ -1,6 +1,11 @@
+import { useContext } from "react"
+import { AdminContext } from "../../../context/adminLayoutContext"
 
 
 export default function RightContent() {
+
+const {showSidebar,setShowSidebar} = useContext(AdminContext)
+      
   return (
   <>
             <div className="right_content h-100 py-1 bg-dark">
@@ -8,7 +13,15 @@ export default function RightContent() {
                     <img src="/assets/images/logo.png" className="h-100"/>
                 </a>
                 <div className="form-check form-switch mx-4 d-none d-md-block">
-                    <input id="handle_toggle_sidemenu" className="form-check-input pointer" type="checkbox" />
+                 <input
+            id="handle_toggle_sidemenu"
+            className="form-check-input pointer"
+            type="checkbox"
+            checked={showSidebar}
+            onChange={(e) => {
+              setShowSidebar(e.target.checked);
+            }}
+          />
                 </div>
             </div>
   </>
