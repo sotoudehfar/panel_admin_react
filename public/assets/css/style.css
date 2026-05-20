@@ -321,7 +321,10 @@ td , th {
     box-shadow: unset !important;
 }
 
-
+.main_section{
+   margin-top:70px;
+   margin-right:80px; 
+}
 
 /* dashboard */
 

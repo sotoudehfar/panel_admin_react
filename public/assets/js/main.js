@@ -75,8 +75,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
         },
     };
 
-    // const ctx = document.getElementById('myChart').getContext('2d');
-    // new Chart(ctx , config)
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx , config)
 const canvas = document.getElementById('myChart');
 
 if (canvas) {
