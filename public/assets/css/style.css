@@ -18,7 +18,17 @@ body{
     /* box-sizing: content-box */
 }
 
+a{
+    text-decoration: none;
+}
 
+
+.modal_background.fade{
+    display: none !important;
+}
+.navbar.fixed_top{
+    z-index: unset!important;
+}
 /* scrollbars ------------------ */
 ::-webkit-scrollbar{
     width: 5px !important;
@@ -196,7 +206,7 @@ td , th {
     top: 64px;
     height: calc(100vh - 64px);
     padding: 0;
-    z-index: 1000;
+    /* z-index: 1000; */
 }
 #sidebar_section .mini_sidebar{
     width: 70px;
@@ -297,8 +307,9 @@ td , th {
     width: calc(100% - 70px);
     height: calc(100vh - 64px);
     position: fixed;
-    top: 64px;
+    /* top: 64px; */
     left: 0;
+   
     overflow: auto;
     transition: all 300ms ease;
     background: url(/assets/images/body_back4.png) repeat;

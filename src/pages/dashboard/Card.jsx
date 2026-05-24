@@ -33,7 +33,6 @@ export default function Card({currentValue, title, desc, icon, lastWeekValue, la
             </div>
           </div>
   
-  
   </>
 
   )

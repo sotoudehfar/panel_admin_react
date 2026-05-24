@@ -1,5 +1,5 @@
 import { AdminContextContainer } from "../../context/adminLayoutContext";
-import Dashboard from "../../pages/dashboard/Dashboard";
+import Content from "../../pages/Content";
 import Navbar from "./navbar/Navbar";
 import Sidebar from "./sidebar/Sidebar";
 
@@ -10,10 +10,11 @@ export default function Panel() {
     <AdminContextContainer>
 
       <div>
+         <Content/>
          <Navbar/>
          <Sidebar/>
-         <Dashboard/>
-      </div>
+         
+        </div>
     </AdminContextContainer>
 
 
@@ -26,101 +27,7 @@ export default function Panel() {
 
     //     <section id="content_section" 
     //      className={`bg-light py-2 px-3 ${showSlidebar ? "with_sidebar" : null}  `}>
-
-        
-    //     {/* <!-- #region(collapsed) add product category section start --> */}
-    //     <div id="manage_product_category" className="manage_product_category main_section d-none">
-    //         <h4 className="text-center my-3">مدیریت دسته بندی محصولات</h4>
-    //         <div className="row justify-content-between">
-    //             <div className="col-10 col-md-6 col-lg-4">
-    //                 <div className="input-group mb-3" >
-    //                     <input type="text" className="form-control" placeholder="قسمتی از عنوان را وارد کنید"/>
-    //                     <span className="input-group-text" >جستجو</span>
-    //                 </div>
-    //             </div>
-    //             <div className="col-2 col-md-6 col-lg-4 d-flex flex-column align-items-end">
-    //                 <button className="btn btn-success d-flex justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#add_product_category_modal">
-    //                     <i className="fas fa-plus text-light"></i>
-    //                 </button>
-    //             </div>
-    //         </div>
-    //         <table className="table table-responsive text-center table-hover table-bordered">
-    //             <thead className="table-secondary">
-    //                 <tr>
-    //                     <th>#</th>
-    //                     <th>عنوان</th>
-    //                     <th>وضعیت</th>
-    //                     <th>عملیات</th>
-    //                 </tr>
-    //             </thead>
-    //             <tbody>
-    //                 <tr>
-    //                     <td>1</td>
-    //                     <td>دسته شماره فلان</td>
-    //                     <td>فعال</td>
-    //                     <td>
-    //                         <i className="fas fa-project-diagram text-info mx-1 hoverable_text pointer has_tooltip" title="زیرمجموعه" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-    //                         <i className="fas fa-edit text-warning mx-1 hoverable_text pointer has_tooltip" title="ویرایش دسته" data-bs-toggle="modal" data-bs-placement="top" data-bs-target="#add_product_category_modal"></i>
-    //                         <i className="fas fa-plus text-success mx-1 hoverable_text pointer has_tooltip" title="افزودن ویژگی" data-bs-toggle="modal" data-bs-target="#add_product_category_attr_modal"></i>
-    //                         <i className="fas fa-times text-danger mx-1 hoverable_text pointer has_tooltip" title="حذف دسته" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-    //                     </td>
-    //                 </tr>
-    //                 <tr>
-    //                     <td>1</td>
-    //                     <td>دسته شماره فلان</td>
-    //                     <td>فعال</td>
-    //                     <td>
-    //                         <i className="fas fa-project-diagram text-info mx-1 hoverable_text pointer has_tooltip" title="زیرمجموعه" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-    //                         <i className="fas fa-edit text-warning mx-1 hoverable_text pointer has_tooltip" title="ویرایش دسته" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-    //                         <i className="fas fa-plus text-success mx-1 hoverable_text pointer has_tooltip" title="افزودن ویژگی" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#add_product_category_attr_modal"></i>
-    //                         <i className="fas fa-times text-danger mx-1 hoverable_text pointer has_tooltip" title="حذف دسته" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-    //                     </td>
-    //                 </tr>
-    //                 <tr>
-    //                     <td>1</td>
-    //                     <td>دسته شماره فلان</td>
-    //                     <td>فعال</td>
-    //                     <td>
-    //                         <i className="fas fa-project-diagram text-info mx-1 hoverable_text pointer has_tooltip" title="زیرمجموعه" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-    //                         <i className="fas fa-edit text-warning mx-1 hoverable_text pointer has_tooltip" title="ویرایش دسته" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-    //                         <i className="fas fa-plus text-success mx-1 hoverable_text pointer has_tooltip" title="افزودن ویژگی" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#add_product_category_attr_modal"></i>
-    //                         <i className="fas fa-times text-danger mx-1 hoverable_text pointer has_tooltip" title="حذف دسته" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-    //                     </td>
-    //                 </tr>
-    //                 <tr>
-    //                     <td>1</td>
-    //                     <td>دسته شماره فلان</td>
-    //                     <td>فعال</td>
-    //                     <td>
-    //                         <i className="fas fa-project-diagram text-info mx-1 hoverable_text pointer has_tooltip" title="زیرمجموعه" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-    //                         <i className="fas fa-edit text-warning mx-1 hoverable_text pointer has_tooltip" title="ویرایش دسته" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-    //                         <i className="fas fa-plus text-success mx-1 hoverable_text pointer has_tooltip" title="افزودن ویژگی" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#add_product_category_attr_modal"></i>
-    //                         <i className="fas fa-times text-danger mx-1 hoverable_text pointer has_tooltip" title="حذف دسته" data-bs-toggle="tooltip" data-bs-placement="top"></i>
-    //                     </td>
-    //                 </tr>
-    //             </tbody>
-    //         </table>
-    //         <nav aria-label="Page navigation example" className="d-flex justify-content-center">
-    //             <ul className="pagination dir_ltr">
-    //               <li className="page-item">
-    //                 <a className="page-link" href="#" aria-label="Previous">
-    //                   <span aria-hidden="true">&raquo;</span>
-    //                 </a>
-    //               </li>
-    //               <li className="page-item"><a className="page-link" href="#">1</a></li>
-    //               <li className="page-item"><a className="page-link" href="#">2</a></li>
-    //               <li className="page-item"><a className="page-link" href="#">3</a></li>
-    //               <li className="page-item">
-    //                 <a className="page-link" href="#" aria-label="Next">
-    //                   <span aria-hidden="true">&laquo;</span>
-    //                 </a>
-    //               </li>
-    //             </ul>
-    //           </nav>
-    //     </div>
-    //     {/* <!-- #endregion content --> */}
-
-    //     {/* <!-- #region(collapsed) add product section start --> */}
+    //    {/* <!-- #region(collapsed) add product section start --> */}
     //     <div id="manage_product_section" className="manage_product_section main_section d-none">
     //         <h4 className="text-center my-3">مدیریت محصولات</h4>
     //         <div className="row justify-content-between">
