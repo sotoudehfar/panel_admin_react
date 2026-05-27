@@ -1,4 +1,33 @@
+import { useEffect } from "react";
+import { useState } from "react";
+
+let numOfPage = 2;
 export default function PaginatedTable({ data, dataInfo, additionField }) {
+  const [tableData, setTableData] = useState([])
+  const [currentPage,setCurrentPage]=useState(1)
+  const [pages,setPages] = useState([])
+  const [pageCount , setPageCount] = useState(1)
+
+ useEffect(() => {
+  console.log(data.length)
+    if (data && data.length > 0) {
+      const pCount = Math.ceil(data.length / numOfPage); // استفاده از Math.ceil برای رند کردن رو به بالا
+      let pArr = [];
+      for (let i = 1; i <= pCount; i++) {
+        pArr.push(i);
+      }
+      setPages(pArr);
+      
+
+    }
+  }, [data]); // اضافه کردن data به وابستگی‌ها
+
+  useEffect(()=>{
+    let start = (currentPage*numOfPage)-numOfPage
+    let end= (currentPage*numOfPage)
+    setTableData(data.slice(start,end))
+
+  },[currentPage,data])
   return (
     <>
       <table className="table table-responsive text-center table-hover table-bordered">
@@ -11,7 +40,7 @@ export default function PaginatedTable({ data, dataInfo, additionField }) {
           </tr>
         </thead>
         <tbody>
-          {data.map((d) => (
+          {tableData.map((d) => (
             <tr key={d.id}>
               {dataInfo.map((i) => (
                 <td key={i.field + "_" + d.id}>{d[i.field]}</td>
@@ -28,9 +57,18 @@ export default function PaginatedTable({ data, dataInfo, additionField }) {
       {/* بخش Pagination (بدون تغییر) */}
       <nav className="d-flex justify-content-center">
         <ul className="pagination dir_ltr">
-          <li className="page-item"><a className="page-link" href="#">&raquo;</a></li>
-          <li className="page-item active"><a className="page-link" href="#">1</a></li>
-          <li className="page-item"><a className="page-link" href="#">&laquo;</a></li>
+          <li className="page-item">
+            <span className={` page-link pointer ${currentPage==1 ? 'disable' : ''}`}  onClick={()=>{setCurrentPage(currentPage-1)}}>&raquo;</span></li>
+          {
+            pages.map(page=>(
+              <li key={page} className={`page-item `}>
+              <span className={`page-link pointer ${currentPage === page ? 'active' : ''}` }  onClick={()=>{setCurrentPage(page)}}>
+                { page}
+              </span></li>
+            ))
+          }      
+          <li className="page-item">
+            <span className={` page-link pointer ${currentPage==pageCount ? 'disable' : ''}` } onClick={()=>{setCurrentPage(currentPage+1)}}>&laquo;</span></li>
         </ul>
       </nav>
     </>

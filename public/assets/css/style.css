@@ -22,6 +22,10 @@ a{
     text-decoration: none;
 }
 
+.disable {
+   pointer-events: none!important;
+   opacity: .5;
+}
 
 .modal_background.fade{
     display: none !important;

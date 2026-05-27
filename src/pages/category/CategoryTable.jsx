@@ -5,6 +5,11 @@ export default function CategoryTable() {
     { id: "1", Category: "سبحان", title: "توپ", price: "11111", stock: "5", status: "1" },
     { id: "2", Category: "آنیسا", title: "موبایل", price: "2میلیون", stock: "5", status: "2" },
     { id: "3", Category: "سروش", title: "گوشی", price: "70میلیون", stock: "5", status: "1" },
+    { id: "4", Category: "سروش", title: "گوشی", price: "70میلیون", stock: "5", status: "1" },
+    { id: "5", Category: "سروش", title: "گوشی", price: "70میلیون", stock: "5", status: "1" },
+    { id: "6", Category: "سروش", title: "گوشی", price: "70میلیون", stock: "5", status: "1" },
+    { id: "7", Category: "سروش", title: "گوشی", price: "70میلیون", stock: "5", status: "1" },
+    { id: "8", Category: "سروش", title: "گوشی", price: "70میلیون", stock: "5", status: "1" },
   ];
 
   const dataInfo = [
