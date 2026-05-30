@@ -1,4 +1,5 @@
 import PaginatedTable from "../../components/PaginatedTable";
+import AddCategory from "./AddCategory";
 
 export default function CategoryTable() {
   const data = [
@@ -18,7 +19,7 @@ export default function CategoryTable() {
     { field: "price", title: "قیمت محصول" },
   ];
 
-  const additionalElements = (itemId) => {
+  const additionalElements = () => {
     // فقط آیکون‌ها را برمی‌گردانیم، بدون تگ tr یا td اضافه
     return (
       <>
@@ -48,14 +49,27 @@ export default function CategoryTable() {
 
   const additionField = {
     title: "عملیات",
-    element: (itemId) => additionalElements(itemId),
+    element: () => additionalElements(),
   };
+
+  const searchParams = {
+    title : "جستجو",
+    placeholder : "قمستی از عنوان را وارد کنید",
+    searchField : "title"
+
+  }
 
   return (
     <PaginatedTable
-      data={data}
+        data={data}
       dataInfo={dataInfo}
       additionField={additionField}
-    />
+      searchParams={searchParams}
+      numOfPage= {4}
+    >
+      <AddCategory/>
+    </PaginatedTable>
+
+   
   );
 }

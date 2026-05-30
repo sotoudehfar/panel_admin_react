@@ -1,8 +1,16 @@
 import ModalsContainer from "../../components/ModalsContainer";
 
 export default function AddCategory() {
+  console.log("salam")
   return (
     <>
+      <button
+        className="btn btn-success d-flex justify-content-center align-items-center"
+        data-bs-toggle="modal"
+        data-bs-target="#add_product_category_modal"
+      >
+        <i className="fas fa-plus text-light"></i>
+      </button>
       <ModalsContainer
         fullscreen={true}
         id="add_product_category_modal"
@@ -64,7 +72,6 @@ export default function AddCategory() {
                   className="form-check-input pointer"
                   type="checkbox"
                   id="flexSwitchCheckDefault"
-                  
                 />
                 <label
                   className="form-check-label pointer"
