@@ -30,6 +30,14 @@ a{
 .modal_background.fade{
     display: none !important;
 }
+
+.modal-backdrop {
+  z-index: 1040 !important;
+}
+.modal {
+  z-index: 1050 !important;
+}
+
 .navbar.fixed_top{
     z-index: unset!important;
 }

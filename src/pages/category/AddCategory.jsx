@@ -1,7 +1,7 @@
 import ModalsContainer from "../../components/ModalsContainer";
 
 export default function AddCategory() {
-  console.log("salam")
+
   return (
     <>
       <button
