@@ -32,24 +32,24 @@ export default function Sidebar() {
                 <SidbarItems targetPath={"/brands"} items="مدیریت برندها" icon="fas fa-copyright"/>               
                 <SidbarItems targetPath={"/garanties"} items="مدیریت گارانتی ها" icon="fab fa-pagelines"/>               
                 <SidbarItems targetPath={"/colors"} items="مدیریت رنگ ها" icon="fas fa-palette"/>               
-                <SidbarItems targetPath={"/"} items="مدیریت تخفیف ها" icon="fas fa-percentage"/>               
+                <SidbarItems targetPath={"/discounts"} items="مدیریت تخفیف ها" icon="fas fa-percentage"/>               
 
                 {/* <!-- =================================== --> */}
                 <SilebarGroupTitle title="سفارشات و سبد"/>
-                <SidbarItems targetPath={"/"} items="مدیریت سبدها" icon="fas fa-shopping-basket"/>               
-                <SidbarItems targetPath={"/"} items="مدیریت سفارشات" icon="fas fa-luggage-cart"/>               
-                <SidbarItems targetPath={"/"} items="مدیریت نحوه ارسال" icon="fas fa-truck-loading"/>               
+                <SidbarItems targetPath={"/cards"} items="مدیریت سبدها" icon="fas fa-shopping-basket"/>               
+                <SidbarItems targetPath={"/orders"} items="مدیریت سفارشات" icon="fas fa-luggage-cart"/>               
+                <SidbarItems targetPath={"/deliveries"} items="مدیریت نحوه ارسال" icon="fas fa-truck-loading"/>               
 
                 {/* <!-- =================================== --> */}
                 <SilebarGroupTitle title="کاربران و همکاران"/>
-                <SidbarItems targetPath={"/"} items="مشاهده کاربران" icon="fas fa-users"/>               
-                <SidbarItems targetPath={"/"} items="نقش ها" icon="fas fa-user-tag"/>               
-                <SidbarItems targetPath={"/"} items="مجوز ها" icon="fas fa-shield-alt"/>               
+                <SidbarItems targetPath={"/users"} items="مشاهده کاربران" icon="fas fa-users"/>               
+                <SidbarItems targetPath={"/rolls"} items="نقش ها" icon="fas fa-user-tag"/>               
+                <SidbarItems targetPath={"/permissions"} items="مجوز ها" icon="fas fa-shield-alt"/>               
 
                 {/* <!-- =================================== --> */}
                  <SilebarGroupTitle title="ارتباطات"/>
-                 <SidbarItems targetPath={"/"} items="سوال ها" icon="fas fa-question-circle"/>               
-                 <SidbarItems targetPath={"/"} items="نظرات" icon="fas fa-comment"/>               
+                 <SidbarItems targetPath={"/questions"} items="سوال ها" icon="fas fa-question-circle"/>               
+                 <SidbarItems targetPath={"/comments"} items="نظرات" icon="fas fa-comment"/>               
 
       
 

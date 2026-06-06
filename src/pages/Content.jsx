@@ -8,6 +8,15 @@ import Dashboard from "./dashboard/Dashboard";
 import Colors from "./colors/Colors";
 import Garanties from "./garanties/Garanties";
 import Brands from "./brands/Brands";
+import Comments from "./comments/Comments";
+import Deliveries from "./deliveries/Deliveries";
+import Cards from "./cards/Cards";
+import Orders from "./orders/Orders";
+import Users from "./users/Users";
+import Rolles from "./rolles/Rolles";
+import Questions from "./questions/Questions";
+import Permissions from "./peromissions/Permissions";
+import Discounts from "./discounts/Discounts";
 
 export default function Content() {
   const { showSidebar } = useContext(AdminContext);
@@ -21,6 +30,16 @@ export default function Content() {
         <Route  path="/colors" element={<Colors/>}/>
         <Route  path="/garanties" element={<Garanties/>}/>
         <Route  path="/brands" element={<Brands/>}/>
+        <Route  path="/comments" element={<Comments/>} />
+        <Route  path="/deliveries" element={<Deliveries/>} />
+        <Route  path="/cards" element={<Cards/>} />
+        <Route  path="/orders" element={<Orders/>} />
+        <Route  path="/users" element={<Users/>} />
+        <Route  path="/rolls" element={<Rolles/>} />
+        <Route  path="/questions" element={<Questions/>} />
+        <Route  path="/permissions" element={<Permissions/>} />
+        <Route  path="/discounts" element={<Discounts/>} />
+
 
 
 
