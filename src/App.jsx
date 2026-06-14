@@ -1,15 +1,23 @@
-import Panel from "./layout/admin/Panel"
-
-
+import { useLocation } from "react-router-dom"
+import AdminLayout from "./layout/admin/AdminLayout"
+import AuthLayout from "./layout/auth/AuthLayout"
 
 
 function App() {
-  
-
+ const location = useLocation()
   return (
-    <>
-      <Panel/>
-    </>
+    <div className="App">
+    {
+      location.pathname.includes('/auth') ? (
+        <AuthLayout/>
+      ) :
+      (
+
+        <AdminLayout/>
+      )
+    }
+    
+    </div>
   )
 }
 
