@@ -17,6 +17,7 @@ import Rolles from "./rolles/Rolles";
 import Questions from "./questions/Questions";
 import Permissions from "./peromissions/Permissions";
 import Discounts from "./discounts/Discounts";
+import Logout from "./auth/Logout";
 
 export default function Content() {
   const { showSidebar } = useContext(AdminContext);
@@ -39,7 +40,7 @@ export default function Content() {
         <Route  path="/questions" element={<Questions/>} />
         <Route  path="/permissions" element={<Permissions/>} />
         <Route  path="/discounts" element={<Discounts/>} />
-
+        <Route  path="/logout" element={<Logout/>} />
 
 
 

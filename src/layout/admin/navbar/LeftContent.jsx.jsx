@@ -1,51 +1,81 @@
+import { Link } from "react-router-dom";
+
 export default function LeftContent() {
   return (
-    <>
-      <div className="left_content d-flex flex-row-reverse">
+   
+   
+   
+   <div className="left_content d-flex flex-row-reverse align-items-center position-relative">
+      
+      <div className="dropdown">
         <i
           className="fas fa-grip-vertical fa-2x me-3 pointer"
-          id="dropdownMenuButton1"
+          role="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         ></i>
+
         <ul
-          className="dropdown-menu mini_menu"
-          aria-labelledby="dropdownMenuButton1"
+          className="dropdown-menu mini_menu shadow"
+          style={{ minWidth: "230px", maxWidth: "270px" }}
         >
-          <li className="my-2">
-            <a className="dropdown-item d-block text-center">قاسم بساکی</a>
+          <li>
+            <span className="dropdown-item text-center fw-bold py-2">
+              قاسم بساکی
+            </span>
           </li>
-          <li className="my-2 d-flex justify-content-center align-items-center px-2">
-            <i className="fas fa-tachometer-alt"></i>
-            <a className="dropdown-item" href="#">
+
+          <li>
+            <Link
+              className="dropdown-item d-flex align-items-center"
+              to="/dashboard"
+            >
+              <i className="fas fa-tachometer-alt me-2"></i>
               داشبورد
-            </a>
+            </Link>
           </li>
-          <li className="my-2 d-flex justify-content-center align-items-center px-2">
-            <i className="fas fa-paper-plane"></i>
-            <a className="dropdown-item" href="#">
+
+          <li>
+            <Link
+              className="dropdown-item d-flex align-items-center"
+              to="/tickets"
+            >
+              <i className="fas fa-paper-plane me-2"></i>
               تیکت ها
-            </a>
+            </Link>
           </li>
-          <li className="my-2 d-flex justify-content-center align-items-center px-2">
-            <i className="fas fa-envelope"></i>
-            <a className="dropdown-item" href="#">
+
+          <li>
+            <Link
+              className="dropdown-item d-flex align-items-center"
+              to="/messages"
+            >
+              <i className="fas fa-envelope me-2"></i>
               پیام ها
-            </a>
+            </Link>
           </li>
-          <hr />
-          <li className="d-flex justify-content-center align-items-center px-2">
-            <i className="fas fa-power-off"></i>
-            <a className="dropdown-item" href="#">
+
+          <li>
+            <hr className="dropdown-divider mx-3" />
+          </li>
+
+          <li>
+            <Link
+              to="/logout"
+              className="dropdown-item d-flex align-items-center text-danger"
+            >
+              <i className="fas fa-power-off me-2"></i>
               خروج
-            </a>
+            </Link>
           </li>
         </ul>
-        <i className="far fa-bell fa-2x mx-3 pointer position-relative">
-          <span className="alarm_count">4</span>
-        </i>
-        <i className="fas fa-search fa-2x mx-3 pointer"></i>
       </div>
-    </>
+
+      <i className="far fa-bell fa-2x mx-3 pointer position-relative">
+        <span className="alarm_count">4</span>
+      </i>
+
+      <i className="fas fa-search fa-2x mx-3 pointer"></i>
+    </div>
   );
 }

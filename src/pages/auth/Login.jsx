@@ -3,13 +3,14 @@ import * as Yup from "yup";
 import AuthFormikControl from "../../components/authForm/AuthFormikControl";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AlertForm } from "../../layout/util/AlertForm";
 
 const initialValues = {
   phone: "",
   password: "",
   remember: false,
 };
-const onSubmit = (values , navigate) => {
+const onSubmit = (values , navigate , submitMethods) => {
   axios.post('https://ecomadminapi.azhadev.ir/api/auth/login' , {
   ...values,
     remember : values.remember ? 1 : 0
@@ -20,9 +21,17 @@ const onSubmit = (values , navigate) => {
     if (res.status == 200) {
       localStorage.setItem('loginToken' , JSON.stringify(res.data));
            navigate('/')
+          submitMethods.setSubmitting(false)
+    }else {
+      
+     AlertForm ('متاسفم' , res.data.message , 'error')
+      submitMethods.setSubmitting(false)
     }
 
-  })
+  }).catch(error=>{
+            AlertForm("" , "متاسفانه خطایی از سمت سرور رخ داده است" , "error")
+            submitMethods.setSubmitting(false)
+      });
 };
 const validationSchema = Yup.object({
   phone: Yup.number().required("لطفا این قسمت را پر کنید"),
@@ -38,7 +47,7 @@ const navigate = useNavigate()
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values)=>onSubmit(values , navigate)}
+      onSubmit={(values , submitMethods)=>onSubmit(values , navigate , submitMethods)}
       validationSchema={validationSchema}
     >
       {(formik) => {
@@ -74,7 +83,9 @@ const navigate = useNavigate()
              
              
               <div className="container-login100-form-btn">
-                <button className="login100-form-btn" type="submit">ورود</button>
+                <button className="login100-form-btn" disabled={formik.isSubmitting} type="submit">
+                  {formik.isSubmitting ? "لطفا صبر کنید" : "ورود"}
+                </button>
               </div>
             </Form>
             <div className="login100-pic js-tilt" data-tilt>
