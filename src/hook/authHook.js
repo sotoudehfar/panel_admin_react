@@ -1,34 +1,32 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { resumeToPipeableStream } from "react-dom/server";
+import { getUserServices } from "../services/auth";
 
 export const useIsLogin = () => {
   const [islogin, setIsLogin] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const handleCheckLogin = async () => {
+    try {
+      const res = await getUserServices();
+      setIsLogin(res.status === 200);
+    } catch (error) {
+      localStorage.removeItem("loginToken");
+      setIsLogin(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const loginToken = JSON.parse(localStorage.getItem("loginToken"));
-    console.log("salam", loginToken);
+    const loginToken = localStorage.getItem("loginToken");
+
     if (loginToken) {
-      axios
-        .get("https://ecomadminapi.azhadev.ir/api/auth/user", {
-          headers: {
-            Authorization: `Bearer ${loginToken.token}`,
-          },
-        })
-        .then((res) => {
-          setIsLogin(res.status === 200);
-          setLoading(false);
-        })
-        .catch((e) => {
-          localStorage.removeItem("loginToken");
-          setIsLogin(false);
-          setLoading(false);
-        });
+      handleCheckLogin();
     } else {
       setIsLogin(false);
       setLoading(false);
     }
   }, []);
-  
-  return [loading , islogin]
+
+  return [loading, islogin];
 };
