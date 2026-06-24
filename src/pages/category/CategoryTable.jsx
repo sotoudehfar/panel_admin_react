@@ -1,75 +1,69 @@
+import { useState, useEffect } from "react";
 import PaginatedTable from "../../components/PaginatedTable";
 import AddCategory from "./AddCategory";
+import { getCategoriesServices } from "../../services/category";
+import { AlertForm } from "../../layout/util/AlertForm";
+import ShowInMenu from "./tableAddition/ShowInMenu";
+import Action from "./tableAddition/Action";
 
 export default function CategoryTable() {
-  const data = [
-    { id: "1", Category: "سبحان", title: "توپ", price: "11111", stock: "5", status: "1" },
-    { id: "2", Category: "آنیسا", title: "موبایل", price: "2میلیون", stock: "5", status: "2" },
-    { id: "3", Category: "سروش", title: "گوشی", price: "70میلیون", stock: "5", status: "1" },
-    { id: "4", Category: "سروش", title: "گوشی", price: "70میلیون", stock: "5", status: "1" },
-    { id: "5", Category: "سروش", title: "گوشی", price: "70میلیون", stock: "5", status: "1" },
-    { id: "6", Category: "سروش", title: "گوشی", price: "70میلیون", stock: "5", status: "1" },
-    { id: "7", Category: "سروش", title: "گوشی", price: "70میلیون", stock: "5", status: "1" },
-    { id: "8", Category: "سروش", title: "گوشی", price: "70میلیون", stock: "5", status: "1" },
-  ];
+
+  const [data, setData] = useState([]);
+
+  const handleGetCategories = async () => {
+    try {
+      const res = await getCategoriesServices();
+
+      if (res.status === 200) {
+        setData(res.data.data);
+      } else {
+        AlertForm("خطا!", res.data.message, "error");
+      }
+
+    } catch (error) {
+      AlertForm("خطا!", "مشکلی در ارتباط با سرور پیش آمده است", "error");
+    }
+  };
+
+  useEffect(() => {
+    handleGetCategories();
+  }, []);
 
   const dataInfo = [
     { field: "id", title: "#" },
     { field: "title", title: "عنوان محصول" },
-    { field: "price", title: "قیمت محصول" },
+    { field: "parent_id", title: "والد" },
+    { field: "create_at", title: "تاریخ" },
   ];
 
-  const additionalElements = () => {
-    // فقط آیکون‌ها را برمی‌گردانیم، بدون تگ tr یا td اضافه
-    return (
-      <>
-        <i
-          className="fas fa-project-diagram text-info mx-1 pointer has_tooltip"
-          title="زیرمجموعه"
-        ></i>
-        <i
-          className="fas fa-edit text-warning mx-1 pointer has_tooltip"
-          title="ویرایش دسته"
-          data-bs-toggle="modal"
-          data-bs-target="#add_product_category_modal"
-        ></i>
-        <i
-          className="fas fa-plus text-success mx-1 pointer has_tooltip"
-          title="افزودن ویژگی"
-          data-bs-toggle="modal"
-          data-bs-target="#add_product_category_attr_modal"
-        ></i>
-        <i
-          className="fas fa-times text-danger mx-1 pointer has_tooltip"
-          title="حذف دسته"
-        ></i>
-      </>
-    );
-  };
 
-  const additionField = {
+
+  const additionField = [
+    {
+    title: "نمایش در منو",
+    elements : (rowData)=> <ShowInMenu rowData={rowData}/>
+  },
+    {
     title: "عملیات",
-    element: () => additionalElements(),
-  };
+    elements: (rowData)=> <Action rowData={rowData}/>,
+  }
+  ]
 
   const searchParams = {
-    title : "جستجو",
-    placeholder : "قمستی از عنوان را وارد کنید",
-    searchField : "title"
-
-  }
+    title: "جستجو",
+    placeholder: "قسمتی از عنوان را وارد کنید",
+    searchField: "title"
+  };
 
   return (
     <PaginatedTable
-        data={data}
+      data={data}
       dataInfo={dataInfo}
       additionField={additionField}
       searchParams={searchParams}
-      numOfPage= {4}
+      numOfPage={4}
     >
-      <AddCategory/>
+      <AddCategory />
     </PaginatedTable>
-
-   
   );
 }

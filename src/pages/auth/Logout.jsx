@@ -9,7 +9,6 @@ export default function Logout() {
 const handleLogout = async () => {
   try {
     const res = await LogoutService();
-
     if (res.status === 200) {
       localStorage.removeItem("loginToken");
     } else {

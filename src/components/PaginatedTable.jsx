@@ -29,13 +29,18 @@ export default function PaginatedTable({  data, dataInfo, numOfPage, additionFie
     setTableData(initData.slice(start, end));
   }, [currentPage, initData]);
 
-useEffect(()=>{
-  data.filter((d) =>
+useEffect(() => {
+  const filtered = data.filter((d) =>
     String(d?.[searchParams.searchField] ?? "").includes(searchChar)
-  )
- setCurrentPage(1)
-},[searchChar])
+  );
+
+  setInitData(filtered);
+  setCurrentPage(1);
+}, [searchChar, data]);
   
+useEffect(() => {
+  setInitData(data);
+}, [data]);
   return (
     <>
       <div className="row justify-content-between">
@@ -60,7 +65,9 @@ useEffect(()=>{
             {dataInfo.map((i, index) => (
               <th key={i.field + index}>{i.title}</th>
             ))}
-            {additionField && <th>{additionField.title}</th>}
+            {additionField  ? additionField.map((a, index)=>(
+              <th key={a.id+"__"+index}>{a.title}</th>
+            )) : null}
           </tr>
         </thead>
         <tbody>
@@ -70,7 +77,10 @@ useEffect(()=>{
                 <td key={i.field + "_" + d.id}>{d[i.field]}</td>
               ))}
               {/* اینجا نباید از th استفاده کنید، باید td باشد */}
-              {additionField && <td>{additionField.element(d.id)}</td>}
+
+            {additionField  ? additionField.map((a, index)=>(
+              <td key={a.id+"___"+index}>{a.elements(d)}</td>
+            )) : null}
             </tr>
           ))}
         </tbody>
