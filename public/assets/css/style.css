@@ -240,7 +240,7 @@ td , th {
     top: 64px;
     height: calc(100vh - 64px);
     padding: 0;
-    /* z-index: 1000; */
+    z-index: 1000;
 }
 #sidebar_section .mini_sidebar{
     width: 70px;
@@ -338,18 +338,23 @@ td , th {
 
 /* content start------->>>>>>> */
 #content_section{
+    margin-right: 70px;
     width: calc(100% - 70px);
-    height: calc(100vh - 64px);
-    position: fixed;
-    /* top: 64px; */
-    left: 0;
-   
+    min-height: calc(100vh - 64px);
+    position: relative;
     overflow: auto;
     transition: all 300ms ease;
     background: url(/assets/images/body_back4.png) repeat;
 }
+
 #content_section.with_sidebar{
+    margin-right: 250px;
     width: calc(100% - 250px);
+}
+
+.main_section{
+   margin-top: 70px;
+   margin-right: 0;
 }
 
 .color_tag{

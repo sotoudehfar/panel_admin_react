@@ -21,33 +21,33 @@ import Logout from "./auth/Logout";
 
 export default function Content() {
   const { showSidebar } = useContext(AdminContext);
- 
+
   return (
-    <section id="content_section" className={`bg-light py-2 px-3 ${showSidebar ? "with_sidebar" : null}`}>
-       <Routes>
-        <Route  path="/" element={<Dashboard/>}/>
-        <Route  path="/category" element={<Category/>}/>
-        <Route  path="/product" element={<Product/>}/>
-        <Route  path="/colors" element={<Colors/>}/>
-        <Route  path="/garanties" element={<Garanties/>}/>
-        <Route  path="/brands" element={<Brands/>}/>
-        <Route  path="/comments" element={<Comments/>} />
-        <Route  path="/deliveries" element={<Deliveries/>} />
-        <Route  path="/cards" element={<Cards/>} />
-        <Route  path="/orders" element={<Orders/>} />
-        <Route  path="/users" element={<Users/>} />
-        <Route  path="/rolls" element={<Rolles/>} />
-        <Route  path="/questions" element={<Questions/>} />
-        <Route  path="/permissions" element={<Permissions/>} />
-        <Route  path="/discounts" element={<Discounts/>} />
-        <Route  path="/logout" element={<Logout/>} />
-
-
-
-
-
-        <Route  path="*" element={<Dashboard/>}/>   /*if user enter other word redirect to dashbord*/
-       </Routes>
-   </section>
+    <section
+      id="content_section"
+      className={`bg-light py-2 px-3 ${showSidebar ? "with_sidebar" : null}`}
+    >
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/category" element={<Category />} />
+        <Route path="/category/:categoryId" element={<Category />} />
+        <Route path="/product" element={<Product />} />
+        <Route path="/colors" element={<Colors />} />
+        <Route path="/garanties" element={<Garanties />} />
+        <Route path="/brands" element={<Brands />} />
+        <Route path="/comments" element={<Comments />} />
+        <Route path="/deliveries" element={<Deliveries />} />
+        <Route path="/cards" element={<Cards />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/rolls" element={<Rolles />} />
+        <Route path="/questions" element={<Questions />} />
+        <Route path="/permissions" element={<Permissions />} />
+        <Route path="/discounts" element={<Discounts />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="*" element={<Dashboard />} /> /*if user enter other word
+        redirect to dashbord*/
+      </Routes>
+    </section>
   );
 }
