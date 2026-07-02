@@ -5,18 +5,22 @@ import { getCategoriesServices } from "../../services/category";
 import { AlertForm } from "../../layout/util/AlertForm";
 import ShowInMenu from "./tableAddition/ShowInMenu";
 import Action from "./tableAddition/Action";
-import { useLocation, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
+import jMoment from "jalali-moment";
+import { convertDate } from "../../layout/util/convertDate";
 
 export default function CategoryTable() {
+
+
   // uses params for recieve row Id from Action Component
-  const { categoryId } = useParams();
-  // uses useLocation for recieve rowData
-  const location = useLocation();
+  const params = useParams();
+
   const [data, setData] = useState([]);
 
   const handleGetCategories = async () => {
+
     try {
-      const res = await getCategoriesServices(categoryId);
+      const res = await getCategoriesServices(params.categoryId);
 
       if (res.status === 200) {
         setData(res.data.data);
@@ -30,16 +34,26 @@ export default function CategoryTable() {
 
   useEffect(() => {
     handleGetCategories();
-  }, [categoryId]);
+  }, [params.categoryId]);
+
+  useEffect(() => {
+  if (data.length) {
+    console.log("First row:", data[0]);
+  }
+}, [data]);
 
   const dataInfo = [
     { field: "id", title: "#" },
     { field: "title", title: "عنوان محصول" },
     { field: "parent_id", title: "والد" },
-    { field: "create_at", title: "تاریخ" },
+  
   ];
 
   const additionField = [
+    {
+      title: "تاریخ",
+      elements: (rowData) => convertDate(rowData.created_at) ,
+    },
     {
       title: "نمایش در منو",
       elements: (rowData) => <ShowInMenu rowData={rowData} />,
@@ -58,12 +72,10 @@ export default function CategoryTable() {
 
   return (
     <>
-      {location.state ? (
-        <h5 className="text-center">
-          <span>زیر گروه:</span>
-          <span className="text-info">{location.state.parentData.title}</span>
-        </h5>
-      ) : null}
+      <Outlet />
+   {
+    data.length ? (
+
       <PaginatedTable
         data={data}
         dataInfo={dataInfo}
@@ -73,6 +85,11 @@ export default function CategoryTable() {
       >
         <AddCategory />
       </PaginatedTable>
+
+    ): (
+      <h4 className="text-center my-5 text-danger">رکوردی برای نمایش وجود ندارد</h4>
+    )
+   }
     </>
   );
 }

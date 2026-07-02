@@ -18,6 +18,7 @@ import Questions from "./questions/Questions";
 import Permissions from "./peromissions/Permissions";
 import Discounts from "./discounts/Discounts";
 import Logout from "./auth/Logout";
+import CategoryChildren from "./category/CategoryChildren.jsx";
 
 export default function Content() {
   const { showSidebar } = useContext(AdminContext);
@@ -29,8 +30,10 @@ export default function Content() {
     >
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/category" element={<Category />} />
-        <Route path="/category/:categoryId" element={<Category />} />
+  <Route path="/category" element={<Category />}>
+  {/* روت فرزند: مسیر نسبی بدون اسلش اول و تکرار کلمه category */}
+  <Route path=":categoryId" element={<CategoryChildren />} />
+</Route>
         <Route path="/product" element={<Product />} />
         <Route path="/colors" element={<Colors />} />
         <Route path="/garanties" element={<Garanties />} />
