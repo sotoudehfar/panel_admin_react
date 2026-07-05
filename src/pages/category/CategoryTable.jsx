@@ -6,7 +6,6 @@ import { AlertForm } from "../../layout/util/AlertForm";
 import ShowInMenu from "./tableAddition/ShowInMenu";
 import Action from "./tableAddition/Action";
 import { Outlet, useParams } from "react-router-dom";
-import jMoment from "jalali-moment";
 import { convertDate } from "../../layout/util/convertDate";
 
 export default function CategoryTable() {

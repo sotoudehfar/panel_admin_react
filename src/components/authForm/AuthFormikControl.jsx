@@ -1,10 +1,9 @@
 
-// import Radio from './Radio';
-// import Date from './Date';
-// import File from './File';
 
+
+import Switch from "./form/Switch";
 import Input from "./Input";
-import Switch from "./Switch";
+
 
 const AuthFormikControl = (props) => {
     switch (props.control) {
