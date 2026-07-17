@@ -1,9 +1,10 @@
 import {  useEffect } from "react";
 import { useState } from "react";
+import SpinnerLoad from "./SpinnerLoad";
 
 
 
-export default function PaginatedTable({  data, dataInfo, numOfPage, additionField ,searchParams, children  }) {
+export default function PaginatedTable({  data, dataInfo, numOfPage, additionField ,searchParams, children ,loading }) {
   const [tableData, setTableData] = useState([]);
   const [initData , setInitData]=useState(data)
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,6 +60,15 @@ useEffect(() => {
          {children}
         </div>
       </div>
+    {
+  loading ? (
+ 
+    <div className="d-flex flex-column justify-content-center align-items-center py-5">
+      <SpinnerLoad colorClass="text-primary" />
+      <div className="mt-3 text-primary">در حال دریافت اطلاعات...</div>
+    </div> 
+    
+  ): data.length ? (
       <table className="table table-responsive text-center table-hover table-bordered">
         <thead className="table-secondary">
           <tr>
@@ -85,6 +95,12 @@ useEffect(() => {
           ))}
         </tbody>
       </table>
+    ): (
+      <h4 className="text-center my-5 text-danger">رکوردی برای نمایش وجود ندارد</h4>
+    )
+   }
+ 
+ 
 
    {
 

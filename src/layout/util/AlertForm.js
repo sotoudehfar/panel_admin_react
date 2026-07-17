@@ -5,6 +5,6 @@ swal({
   title,
   text,
   icon,
-  button: " متوجه شدم عشم",
+  button: " متوجه شدم عشقم",
 })
 }
