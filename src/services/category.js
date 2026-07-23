@@ -27,3 +27,7 @@ export const createNewCategoryService =(data)=>{
     }
     return httpService("/admin/categories",'post',data)
 }
+export const deleteCategoryServise  =(id)=>{
+    return httpService(`/admin/categories/${id}` , 'delete');
+
+}

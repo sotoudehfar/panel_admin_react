@@ -19,6 +19,7 @@ import Permissions from "./peromissions/Permissions";
 import Discounts from "./discounts/Discounts";
 import Logout from "./auth/Logout";
 import CategoryChildren from "./category/CategoryChildren.jsx";
+import AddAtributs from "./category/attr/AddAtributs.jsx";
 
 export default function Content() {
   const { showSidebar } = useContext(AdminContext);
@@ -30,11 +31,12 @@ export default function Content() {
     >
       <Routes>
         <Route path="/" element={<Dashboard />} />
-  <Route path="/category" element={<Category />}>
-  {/* روت فرزند: مسیر نسبی بدون اسلش اول و تکرار کلمه category */}
-  <Route path=":categoryId" element={<CategoryChildren />} />
-</Route>
+        <Route path="/category" element={<Category />}>
+          {/* روت فرزند: مسیر نسبی بدون اسلش اول و تکرار کلمه category */}
+          <Route path=":categoryId" element={<CategoryChildren />} />
+        </Route>
         <Route path="/product" element={<Product />} />
+        <Route path="/category/:categoryId/attributes" element={<AddAtributs />} />
         <Route path="/colors" element={<Colors />} />
         <Route path="/garanties" element={<Garanties />} />
         <Route path="/brands" element={<Brands />} />

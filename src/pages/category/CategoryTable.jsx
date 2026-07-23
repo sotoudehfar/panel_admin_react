@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import PaginatedTable from "../../components/PaginatedTable";
 import AddCategory from "./AddCategory";
-import { getCategoriesServices } from "../../services/category";
+import { deleteCategoryServise, getCategoriesServices } from "../../services/category";
 import ShowInMenu from "./tableAddition/ShowInMenu";
 import Action from "./tableAddition/Action";
 import { Outlet, useParams } from "react-router-dom";
 import { convertDate } from "../../layout/util/convertDate";
+import { AlertForm, Confirm } from "../../layout/util/AlertForm";
 
 export default function CategoryTable() {
-
 
   // uses params for recieve row Id from Action Component
   const params = useParams();
@@ -30,6 +30,25 @@ export default function CategoryTable() {
          setLoading(false)
     }
   };
+
+const handleDeleteCategory = async (rowData) => {
+  // منتظر پاسخ کاربر می‌ماند (true یا null)
+  const isConfirmed = await Confirm("حذف دسته‌بندی", `آیا از حذف " ${rowData.title} " اطمینان دارید؟ `);
+
+  if (isConfirmed) {
+    try {
+      const res = await deleteCategoryServise (rowData.id); // دقت کنید نام سرویس غلط املایی نداشته باشد (Service)
+      
+      if (res.status === 200) {
+        setData(data.filter(d=>d.id !== rowData.id))
+        AlertForm("انجام شد", res.data.message, "success");
+      }
+    } catch (error) {
+      AlertForm("خطا", "مشکلی در حذف دسته بندی پیش آمده است", "error");
+    }
+  }
+};
+
 
   useEffect(() => {
     handleGetCategories();
@@ -59,7 +78,7 @@ export default function CategoryTable() {
     },
     {
       title: "عملیات",
-      elements: (rowData) => <Action rowData={rowData} />,
+      elements: (rowData) => <Action rowData={rowData} handleDeleteCategory = {handleDeleteCategory}/>,
     },
   ];
 
