@@ -1,25 +1,23 @@
-import {  Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import ModalsContainer from "../../components/ModalsContainer";
 import FormikControl from "../../components/authForm/form/FormikControl";
 import { useContext, useEffect, useState } from "react";
-import { getCategoriesServices, getSingleCategorieServices} from "../../services/category";
+import {
+  getCategoriesServices,
+  getSingleCategorieServices,
+} from "../../services/category";
 import { AlertForm } from "../../layout/util/AlertForm";
 import SubmitButton from "../../components/authForm/form/SubmitButton";
 import { useParams } from "react-router-dom";
 import { CategoryContext } from "../../context/categoryContext";
 import { initialValue, onSubmit, validationSchema } from "./core";
 
-
-
-
-export default function AddCategory({setForceRender}) {
-
-
-  const params = useParams()
+export default function AddCategory({ setForceRender }) {
+  const params = useParams();
   const [parents, setParents] = useState([]);
-  const [reInitialValue, setReIntialValue] = useState(null)
-  const {editId ,  SetEditId} = useContext(CategoryContext)
-  const [editCategory, setEditCategory]=useState(null)
+  const [reInitialValue, setReIntialValue] = useState(null);
+  const { editId, SetEditId } = useContext(CategoryContext);
+  const [editCategory, setEditCategory] = useState(null);
 
   const handleGetParentCategories = async () => {
     try {
@@ -38,50 +36,46 @@ export default function AddCategory({setForceRender}) {
   };
 
   // this section for upload information of server ?
-  const handleGetSingleCategory = async()=>{
+  const handleGetSingleCategory = async () => {
     try {
-      const res = await getSingleCategorieServices(editId)
+      const res = await getSingleCategorieServices(editId);
       if (res.status == 200) {
         const oldCategory = res.data.data;
-        setEditCategory(oldCategory)      
+        setEditCategory(oldCategory);
       }
     } catch (error) {
-      AlertForm("مشگل!", "متاسفانه دسته موردنظر پیدا نشد" , "warning")
+      AlertForm("مشگل!", "متاسفانه دسته موردنظر پیدا نشد", "warning");
     }
-  }
+  };
 
-  useEffect(()=>{
- if (editId) handleGetSingleCategory()
-  else setEditCategory(null)
-  },[editId])
-  
-  
+  useEffect(() => {
+    if (editId) handleGetSingleCategory();
+    else setEditCategory(null);
+  }, [editId]);
+
   useEffect(() => {
     handleGetParentCategories();
   }, []);
 
-  useEffect(()=>{
-    if (editCategory){
+  useEffect(() => {
+    if (editCategory) {
       setReIntialValue({
-        parent_id : editCategory.parent_id || "",
-        title : editCategory.title,
-        description:editCategory.description,
-        image:null,
-        is_active : editCategory.is_active ? true : false,
+        parent_id: editCategory.parent_id || "",
+        title: editCategory.title,
+        description: editCategory.description,
+        image: null,
+        is_active: editCategory.is_active ? true : false,
         show_in_menu: editCategory.show_in_menu ? true : false,
-      })
-    }else if (params.categoryId) {
-      setReIntialValue(
-      { 
+      });
+    } else if (params.categoryId) {
+      setReIntialValue({
         ...initialValue,
-        parent_id : params.categoryId}
-      )
-    }else {
-      setReIntialValue(null)
+        parent_id: params.categoryId,
+      });
+    } else {
+      setReIntialValue(null);
     }
-  },[params.categoryId , editCategory])
-
-
+  }, [params.categoryId, editCategory]);
 
   return (
     <>
@@ -89,7 +83,7 @@ export default function AddCategory({setForceRender}) {
         className="btn btn-success d-flex justify-content-center align-items-center"
         data-bs-toggle="modal"
         data-bs-target="#add_product_category_modal"
-        onClick={()=> SetEditId(null)}
+        onClick={() => SetEditId(null)}
       >
         <i className="fas fa-plus text-light"></i>
       </button>
@@ -97,16 +91,18 @@ export default function AddCategory({setForceRender}) {
       <ModalsContainer
         fullscreen={true}
         id="add_product_category_modal"
-        title={ editId ? "ویرایش : "+(editCategory ? editCategory.title :"" ): "افزودن دسته محصولات : "}
-     
+        title={
+          editId
+            ? "ویرایش : " + (editCategory ? editCategory.title : "")
+            : "افزودن دسته محصولات : "
+        }
       >
         <Formik
-          initialValues={ reInitialValue  || initialValue}
-          
-  onSubmit={(values, actions) => { return onSubmit(values, actions, setForceRender, editId);
-
-  }}
-            validationSchema={validationSchema}
+          initialValues={reInitialValue || initialValue}
+          onSubmit={(values, actions) => {
+            return onSubmit(values, actions, setForceRender, editId);
+          }}
+          validationSchema={validationSchema}
           //  use enableReinitialize for use reInitialValue
           enableReinitialize
         >
@@ -139,17 +135,15 @@ export default function AddCategory({setForceRender}) {
                   label="توضیحات"
                   placeholder="توضیحات"
                 />
-              {!editId ? (
-                <FormikControl
-                  className="col-md-6 col-lg-8"
-                  control="file"
-                  name="image"
-                  label="تصویر"
-                  placeholder="تصویر"
-                />
-              ): null
-
-              }
+                {!editId ? (
+                  <FormikControl
+                    className="col-md-6 col-lg-8"
+                    control="file"
+                    name="image"
+                    label="تصویر"
+                    placeholder="تصویر"
+                  />
+                ) : null}
                 <div className="col-12 col-md-6 col-lg-8 row justify-content-center">
                   <div className="col-12 col-md-4 col-lg-3 mx-lg-5">
                     <FormikControl
