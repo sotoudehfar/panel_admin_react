@@ -8,7 +8,7 @@ export default function SubmitButton() {
         return (
           <button 
                     type="submit"
-          className="btn btn-primary " disabled={form.isSubmitting}>
+                    className="btn btn-primary btn-sm" disabled={form.isSubmitting}>
 
         
             {form.isSubmitting ? (

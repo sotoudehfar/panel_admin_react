@@ -19,7 +19,7 @@ import Permissions from "./peromissions/Permissions";
 import Discounts from "./discounts/Discounts";
 import Logout from "./auth/Logout";
 import CategoryChildren from "./category/CategoryChildren.jsx";
-import AddAtributs from "./category/attr/AddAtributs.jsx";
+import Attributs from "./category/attr/Attributs";
 
 export default function Content() {
   const { showSidebar } = useContext(AdminContext);
@@ -36,7 +36,7 @@ export default function Content() {
           <Route path=":categoryId" element={<CategoryChildren />} />
         </Route>
         <Route path="/product" element={<Product />} />
-        <Route path="/category/:categoryId/attributes" element={<AddAtributs />} />
+        <Route path="/category/:categoryId/attributes" element={<Attributs />} />
         <Route path="/colors" element={<Colors />} />
         <Route path="/garanties" element={<Garanties />} />
         <Route path="/brands" element={<Brands />} />
