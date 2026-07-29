@@ -1,5 +1,5 @@
 
-export default function AttrAction({rowData , attrToedit , setAttrToEdite}) {
+export default function AttrAction({rowData , attrToedit , setAttrToEdite , handleDeleteCategoryAttrs}) {
   return (
 <>
     <div className={`text-center ${attrToedit ? "alert-danger danger_shadow" : ""}`} >
@@ -7,6 +7,7 @@ export default function AttrAction({rowData , attrToedit , setAttrToEdite}) {
     <i 
         className="fas fa-times text-danger hoverable_text pointer has_tooltip"
         title="حذف ویژگی"
+        onClick={()=>handleDeleteCategoryAttrs(rowData)}
  
       ></i>
       

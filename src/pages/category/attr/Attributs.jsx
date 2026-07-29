@@ -4,69 +4,12 @@ import PaginatedTable from "../../../components/PaginatedTable";
 import ShowInFilter from "./ShowInFilter";
 import AttrAction from "./AttrAction";
 import PrevPageButton from "../../../components/authForm/PrevPageButton";
-import { addCategoryAttrService, editCategoryAttrService, getCategoriesAttrServices } from "../../../services/categoryAttr";
-import { AlertForm } from "../../../layout/util/AlertForm";
-import { Form, Formik } from "formik";
-import * as Yup from "yup";
-import FormikControl from "../../../components/authForm/form/FormikControl";
-import SubmitButton from "../../../components/authForm/form/SubmitButton";
-
-const initialValue = {
-  title: "",
-  unit: "",
-  in_filter: true
-};
-
-const onSubmit = async (values, actions, categoryId, setData, attrToedit, setAttrToEdite) => {
-  try {
-    const payload = {
-      ...values,
-      in_filter: values.in_filter ? 1 : 0,
-    };
-
-    if (attrToedit) {
-      const res = await editCategoryAttrService(attrToedit.id, payload);
-      if (res.status === 200) {
-        AlertForm("آفرین", "رفیق ویژگی ویرایش شد", "success");
-        setData(oldData => {
-          const newData = [...oldData];
-          const index = newData.findIndex(d => d.id === attrToedit.id);
-          if (index !== -1) {
-            newData[index] = res.data.data;
-          }
-          return newData;
-        });
-        setAttrToEdite(null);
-        actions.resetForm(); // ریست کردن فرم بعد از ویرایش موفق
-      }
-    } else {
-      const res = await addCategoryAttrService(categoryId, payload);
-      if (res.status === 201) {
-        AlertForm("آفرین", "رفیق ویژگی اضافه شد", "success");
-        setData((oldData) => [...oldData, res.data.data]);
-        actions.resetForm();
-      }
-    }
-  } catch (error) {
-    AlertForm("بد شد رفیق", "عملیات با خطا مواجه شد", "warning");
-  }
-};
-
-export const validationSchema = Yup.object({
-  title: Yup.string()
-    .required("لطفا این قسمت رو پر کنید")
-    .matches(
-      /^[\u0600-\u06FF\sa-zA-Z0-9@!%$?&]+$/,
-      "فقط از اعداد و حروف استفاده کنید",
-    ),
-  unit: Yup.string()
-    .required("لطفا این قسمت رو پر کنید")
-    .matches(
-      /^[\u0600-\u06FF\sa-zA-Z0-9@!%$?&]*$/,
-      "فقط از اعداد و حروف استفاده کنید",
-    ),
-  in_filter: Yup.boolean(),
-});
+import { AlertForm, Confirm } from "../../../layout/util/AlertForm";
+import AddAttr from "./AddAttr";
+import {
+  deleteCategoryAttrService,
+  getCategoriesAttrServices,
+} from "../../../services/categoryAttr";
 
 export default function Attributs() {
   const location = useLocation();
@@ -88,7 +31,14 @@ export default function Attributs() {
     },
     {
       title: "عملیات",
-      elements: (rowData) => <AttrAction rowData={rowData} attrToedit={attrToedit} setAttrToEdite={setAttrToEdite} />,
+      elements: (rowData) => (
+        <AttrAction
+          rowData={rowData}
+          attrToedit={attrToedit}
+          setAttrToEdite={setAttrToEdite}
+          handleDeleteCategoryAttrs={handleDeleteCategoryAttrs}
+        />
+      ),
     },
   ];
 
@@ -104,6 +54,7 @@ export default function Attributs() {
       const res = await getCategoriesAttrServices(
         location.state.categoryData.id,
       );
+
       if (res.status === 200) {
         setData(res.data.data);
       }
@@ -111,6 +62,24 @@ export default function Attributs() {
       AlertForm("مشکل!", error.message, "warning");
     } finally {
       setLoading(false);
+    }
+  };
+
+  //  “We need to send you the row that should be deleted in this function.”
+  const handleDeleteCategoryAttrs = async (attr) => {
+    if (
+      await Confirm(`حذف ${attr.title}`, "آیا از حذف این رکورد اطمینان دارید ؟")
+    ) {
+      try {
+        const res = await deleteCategoryAttrService(attr.id);
+        if (res.status === 200) {
+          AlertForm("تبریک می گم", res.data.message, "success");
+          // setData(data.filter(d=>d.id != attr.id))
+          setData((lastData) => [...lastData].filter((d) => d.id !== attr.id));
+        }
+      } catch (error) {
+        AlertForm("دیدی چی شد", "رکورد قابل حذف نیست", "warning");
+      }
     }
   };
 
@@ -124,7 +93,7 @@ export default function Attributs() {
       setReInitialValues({
         title: attrToedit.title,
         unit: attrToedit.unit,
-        in_filter: attrToedit.in_filter ? true : false
+        in_filter: attrToedit.in_filter ? true : false,
       });
     } else {
       setReInitialValues(null); // برگرداندن فرم به مقادیر اولیه خالی
@@ -143,60 +112,13 @@ export default function Attributs() {
         </h6>
 
         <div className="row justify-content-center">
-          <Formik
-            initialValues={reInitValues || initialValue}
-            onSubmit={(values, actions) => onSubmit(values, actions, location.state.categoryData.id, setData, attrToedit, setAttrToEdite)}
-            validationSchema={validationSchema}
-            enableReinitialize
-          >
-            {(formikProps) => (
-              <Form>
-                <div className="row my-3 justify-content-center align-items-center">
-                  <FormikControl
-                    control="input"
-                    type="text"
-                    name="title"
-                    label="عنوان"
-                    className="col-md-6 col-lg-4 my-1"
-                    placeholder="عنوان ویژگی جدید"
-                  />
-
-                  <FormikControl
-                    control="input"
-                    type="text"
-                    name="unit"
-                    label="واحد"
-                    className="col-md-6 col-lg-4 my-1"
-                    placeholder="واحد ویژگی جدید"
-                  />
-
-                  <div className="col-8 col-lg-2 my-1">
-                    <FormikControl
-                      control="switch"
-                      name="in_filter"
-                      label="نمایش در فیلتر"
-                    />
-                  </div>
-
-                  <div className="col-4 col-lg-2 d-flex justify-content-center align-items-center my-1">
-                    <SubmitButton />
-                    {attrToedit ? (
-                      <button 
-                        type="button" // حتما type="button" باشد تا فرم را سابمیت نکند
-                        className="btn btn-sm btn-secondary me-2" 
-                        onClick={() => {
-                          setAttrToEdite(null);
-                          formikProps.resetForm(); // ریست کردن کلید‌ها و فیلدهای فرم بعد از انصراف
-                        }}
-                      >
-                        انصراف
-                      </button>
-                    ) : null}
-                  </div>
-                </div>
-              </Form>
-            )}
-          </Formik>
+          <AddAttr
+            reInitValues={reInitValues}
+            location={location}
+            setData={setData}
+            attrToedit={attrToedit}
+            setAttrToEdite={setAttrToEdite}
+          />
 
           <hr />
 
