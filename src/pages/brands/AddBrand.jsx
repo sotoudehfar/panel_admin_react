@@ -1,6 +1,11 @@
+import { Form, Formik } from "formik";
 import ModalsContainer from "../../components/ModalsContainer";
 
-export default function AddBrand() {
+import FormikControl from "../../components/authForm/form/FormikControl";
+import SubmitButton from "../../components/authForm/form/SubmitButton";
+import { initialValue, validationSchema , onSubmit} from "./core";
+
+export default function AddBrand({setData}) {
   return (
     <>
       <button
@@ -15,67 +20,46 @@ export default function AddBrand() {
         id={"add_brand_modal"}
         title={"افزودن برند جدید"}
       >
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-12">
-              <div class="input-group my-3 dir_ltr">
-                <input
+        <div className="container">
+          <div className="row justify-content-center">
+            <Formik
+              initialValues={initialValue}
+              onSubmit={(values, actions) => onSubmit(values, actions, setData)}
+              validationSchema={validationSchema}
+            >
+              <Form>
+                <FormikControl
+                  control="input"
                   type="text"
-                  class="form-control"
+                  name="original_name"
+                  label="  عنوان لاتین برند"
                   placeholder="کیبرد را در حالت لاتین قرار دهید"
                 />
-                <span class="input-group-text w_8rem justify-content-center">
-                  عنوان لاتیتن برند
-                </span>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="input-group my-3 dir_ltr">
-                <input
+                <FormikControl
+                  control="input"
                   type="text"
-                  class="form-control"
+                  name="persian_name"
+                  label="عنوان فارسی برند"
                   placeholder="کیبرد را در حالت فارسی قرار دهید"
                 />
-                <span class="input-group-text w_8rem justify-content-center">
-                  عنوان فارسی برند
-                </span>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="input-group my-3 dir_ltr">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="متن کوتاه در مورد برند"
+                <FormikControl
+                  control="textarea"
+                  name="descriptions"
+                  label="توضیحات"
+                  placeholder="توضیحات"
                 />
-                <span class="input-group-text w_8rem justify-content-center">
-                  توضیحات برند
-                </span>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="input-group mb-3 dir_ltr">
-                <input type="file" class="form-control" placeholder="تصویر" />
-                <span class="input-group-text w_6rem justify-content-center">
-                  تصویر
-                </span>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="input-group mb-3 dir_ltr">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="یک کلمه در مورد تصویر"
+                <FormikControl
+                  control="file"
+                  name="logo"
+                  label="تصویر"
+                  placeholder="تصویر"
                 />
-                <span class="input-group-text w_6rem justify-content-center">
-                  توضیح تصویر
-                </span>
-              </div>
+
+            <div className="btn_box text-center col-12">
+                <SubmitButton/>
             </div>
-            <div class="btn_box text-center col-12 col-md-6 col-lg-8 mt-4">
-              <button class="btn btn-primary ">ذخیره</button>
-            </div>
+              </Form>
+            </Formik>
           </div>
         </div>
       </ModalsContainer>

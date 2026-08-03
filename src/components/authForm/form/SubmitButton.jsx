@@ -1,27 +1,19 @@
-import { FastField } from "formik";
+import { useFormikContext } from "formik";
 import SpinnerLoad from "../../SpinnerLoad";
 
 export default function SubmitButton() {
-  return (
-    <FastField>
-      {({ form }) => {
-        return (
-          <button 
-                    type="submit"
-                    className="btn btn-primary btn-sm" disabled={form.isSubmitting}>
+  const { isSubmitting } = useFormikContext();
 
-        
-            {form.isSubmitting ? (
-              <SpinnerLoad
-                colorClass={"text-white"}
-                inline={true}
-                isSmall={true}
-              />
-            ) : null}
-            ذخیره
-          </button>
-        );
-      }}
-    </FastField>
+  return (
+    <button
+      type="submit"
+      className="btn btn-primary btn-sm"
+      disabled={isSubmitting}
+    >
+      {isSubmitting ? (
+        <SpinnerLoad colorClass="text-white" inline={true} isSmall={true} />
+      ) : null}
+      ذخیره
+    </button>
   );
 }

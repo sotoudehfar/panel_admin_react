@@ -24,7 +24,7 @@ export const onSubmit = async (values, actions ,setForceRender, editId) => {
       if (res.status === 202 || res.status === 201 || res.status === 200){
          AlertForm("هوررررا", "ویرایش دسته  با موفقیت ثبت شد", "success");
          setForceRender((last)=> last+1)
-         console.log("hellow5")
+  
        
       }
     }else{
