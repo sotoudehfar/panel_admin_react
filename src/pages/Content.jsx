@@ -6,7 +6,6 @@ import Category from "./category/Category";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./dashboard/Dashboard";
 import Colors from "./colors/Colors";
-import Garanties from "./garanties/Garanties";
 import Brands from "./brands/Brands";
 import Comments from "./comments/Comments";
 import Deliveries from "./deliveries/Deliveries";
@@ -20,6 +19,7 @@ import Discounts from "./discounts/Discounts";
 import Logout from "./auth/Logout";
 import CategoryChildren from "./category/CategoryChildren.jsx";
 import Attributs from "./category/attr/Attributs";
+import Garanties from "./garanties/Guaranties.jsx";
 
 export default function Content() {
   const { showSidebar } = useContext(AdminContext);
