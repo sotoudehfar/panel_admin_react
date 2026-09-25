@@ -3,7 +3,6 @@ import PaginatedTable from "../../components/PaginatedTable";
 import { AlertForm, Confirm } from "../../layout/util/AlertForm";
 import AddColor from "./AddColor";
 import Actions from "./Action";
-import { elements } from "chart.js";
 import { deleteColorServise, getAllColorsService } from "../../services/color";
 
 export default function ColorTables() {

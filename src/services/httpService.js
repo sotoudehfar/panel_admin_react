@@ -1,43 +1,101 @@
-
-import axios from "axios"
-import config from './config.json'
+import axios from "axios";
+import config from "./config.json";
 import { AlertForm } from "../layout/util/AlertForm";
 
+export const apiPath = config.onlinePath;
 
-export const apiPath=config.onlienPath
+const axiosInstance = axios.create({
+  baseURL: apiPath,
+  timeout: 20000,
+});
 
-axios.interceptors.response.use((res)=>{
-   
-    if (res.status!== 200 && res.status!==201){
-        if (typeof(res.data)=="object"){
-            let message=""
-            for(const key in res.data){
-                message = message+`${key} : ${res.data[key]}`
-            }
-            res.data.message=message
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    let status = "خطای شبکه";
+    let message =
+      "ارتباط با سرور برقرار نشد؛ لطفاً اینترنت یا وضعیت سرور را بررسی کنید.";
+
+    if (error.response) {
+      status = error.response.status;
+
+      message =
+        error.response.data?.message ||
+        error.response.data?.error ||
+        "خطایی از سمت سرور رخ داده است.";
+
+      if (status === 401) {
+        localStorage.removeItem("loginToken");
+
+        if (!window.location.pathname.includes("/login")) {
+          window.location.href = "/login";
         }
-        AlertForm("مشگل!", res.data.message , "warning");
+
+        message = "نشست شما منقضی شده است؛ لطفاً دوباره وارد شوید.";
+      } else if (status === 403) {
+        message = "شما اجازه دسترسی به این بخش را ندارید.";
+      } else if (status === 404) {
+        message = "مسیر درخواستی پیدا نشد.";
+      } else if (status >= 500) {
+        message = "خطای داخلی سرور رخ داده است.";
+      }
+    } else if (error.request) {
+      if (error.code === "ECONNABORTED") {
+        message = "زمان پاسخ‌گویی سرور به پایان رسید.";
+      }
+    } else {
+      status = "خطا";
+      message = error.message || "خطای ناشناخته رخ داده است.";
     }
-    return res
-},(error)=>{
-   AlertForm(error.response.status,"مشگلی  رخ داده است","error")
-    return Promise.reject(error)
-}
-)
 
+    if (typeof AlertForm === "function") {
+      AlertForm(status, message, "error");
+    }
 
+    console.error("HTTP Error:", error);
 
-// این قمست کد برای ساخت یک متد است 
-export const httpService =(url, method, data=null , headers)=>{
-const tokeninfo =  JSON.parse(localStorage.getItem('loginToken'))
-    return axios({
-    url:apiPath+"/api"+url,
+    return Promise.reject(error);
+  }
+);
+
+export const httpService = (
+  url,
+  method = "GET",
+  data = null,
+  customHeaders = {}
+) => {
+  let token = null;
+
+  try {
+    const tokenInfo = JSON.parse(
+      localStorage.getItem("loginToken") || "null"
+    );
+
+    token = tokenInfo?.token || null;
+  } catch (error) {
+    console.error("خطا در خواندن loginToken:", error);
+  }
+
+  const cleanUrl = String(url)
+    .trim()
+    .replace(/^\/+|\/+$/g, "");
+
+  const finalUrl = cleanUrl.startsWith("api/")
+    ? `/${cleanUrl}`
+    : `/api/${cleanUrl}`;
+
+  return axiosInstance({
+    url: finalUrl,
     method,
     data,
-    headers:{
-        Authorization:tokeninfo ? `Bearer ${tokeninfo.token}` : null,
-        "Content-Type" : "application/json"
-    }
- })
-}
-export default httpService
+    headers: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      "Content-Type": "application/json",
+      ...customHeaders,
+    },
+  });
+};
+
+export default httpService;

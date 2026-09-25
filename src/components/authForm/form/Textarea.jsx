@@ -4,7 +4,7 @@ import FormikError from "./FormikError";
 export default function Textarea({ name, label, className, placeholder }) {
   return (
     <div className={`col-12 ${className || ""}`}>
-      <div className="input-group mb-3 dir_ltr">
+      <div className="input-group mb-3 ">
         <span className="input-group-text w-6rem justify-content-center">
           {label}
         </span>

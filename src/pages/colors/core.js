@@ -1,6 +1,5 @@
 import * as Yup from "yup";
 import { AlertForm } from "../../layout/util/AlertForm";
-import { addNewGuaranteeService, editGuaranteeService } from "../../services/guaranty";
 import { addNewColorService, editColorService } from "../../services/color";
 
 
