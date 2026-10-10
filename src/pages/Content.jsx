@@ -21,6 +21,7 @@ import CategoryChildren from "./category/CategoryChildren.jsx";
 import Attributs from "./category/attr/Attributs";
 import Garanties from "./garanties/Guaranties.jsx";
 import AddProduct from "./product/AddProduct.jsx";
+import ProductGallery from "./product/ProductGallery.jsx";
 
 export default function Content() {
   const { showSidebar } = useContext(AdminContext);
@@ -38,6 +39,7 @@ export default function Content() {
         </Route>
         <Route path="/product" element={<Product />} />
         <Route path="/product/add-product" element={<AddProduct/>}/>
+        <Route path="/product/gallery" element={<ProductGallery/>}/>
         <Route path="/category/:categoryId/attributes" element={<Attributs />} />
         <Route path="/colors" element={<Colors />} />
         <Route path="/garanties" element={<Garanties />} />

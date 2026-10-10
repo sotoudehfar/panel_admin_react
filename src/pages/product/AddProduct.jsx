@@ -9,14 +9,27 @@ import SubmitButton from "../../components/authForm/form/SubmitButton";
 import { getAllBrandsService } from "../../services/brands";
 import { getAllColorsService } from "../../services/color";
 import { getAllGuaranteeService } from "../../services/guaranty";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function AddProduct() {
+  
+  const location = useLocation()
+  const productToEdit = location.state?.productToEdit
+// This state is intended to hold the information for editing a product.
+  const [reInitialValues, setReInitialValue]=useState()
   const [parentCategories, setParentCategories] = useState([]);
   const [mainCategories, setMainCategories] = useState([]);
-  // const [selectedCategories, setSelectedCategories] = useState([]);
+  
+  const [selectedCategories, setSelectedCategories] = useState([]); // used in editting
+  const [selectedColors, setSelectedColors] = useState([]); // used in editting
+  const [selectedGuarantees, setSelectedGuarantees] = useState([]); // used in editting
+  const navigate = useNavigate();
+
+ 
+  
   const [brands, setBrands] = useState([]);
   const [colors, setColors] = useState([]);
- const [guarantees, setGuarantees] = useState([]);
+  const [guarantees, setGuarantees] = useState([]);
 
   const getAllParentCategories = async () => {
     const res = await getCategoriesServices();
@@ -28,53 +41,39 @@ export default function AddProduct() {
         }),
       );
     }
-    console.log(parentCategories);
   };
 
-const getAllBrands = async () => {
-  const res = await getAllBrandsService();
-  if (res.status === 200) {
-    setBrands(
-      res.data.data.map((d) => {
-        return { id: d.id, value: d.original_name };
-      })
-    );
-  }
-};
+  const getAllBrands = async () => {
+    const res = await getAllBrandsService();
+    if (res.status === 200) {
+      setBrands(
+        res.data.data.map((d) => {
+          return { id: d.id, value: d.original_name };
+        }),
+      );
+    }
+  };
 
-const getAllColors = async()=>{
-   const res = await getAllColorsService();
-  if (res.status === 200) {
-    setColors(
-      res.data.data.map((d) => {
-        return { id: d.id, value: d.title };
-      })
-    );
-  }
-}
-const getAllGuarantees = async()=>{
-   const res = await getAllGuaranteeService();
-  if (res.status === 200) {
-    setGuarantees(
-      res.data.data.map((d) => {
-        return { id: d.id, value: d.title };
-      })
-    );
-  } 
-}
-
-   useEffect(() => {
-    getAllParentCategories();
-    getAllBrands();
-    getAllColors();
-    getAllGuarantees()
-
- 
-  }, []);
-
-  useEffect(() => {
-    getAllParentCategories();
-  }, []);
+  const getAllColors = async () => {
+    const res = await getAllColorsService();
+    if (res.status === 200) {
+      setColors(
+        res.data.data.map((d) => {
+          return { id: d.id, value: d.title };
+        }),
+      );
+    }
+  };
+  const getAllGuarantees = async () => {
+    const res = await getAllGuaranteeService();
+    if (res.status === 200) {
+      setGuarantees(
+        res.data.data.map((d) => {
+          return { id: d.id, value: d.title };
+        }),
+      );
+    }
+  };
 
   const handleSetMainCategories = async (value) => {
     setMainCategories("waiting");
@@ -91,19 +90,76 @@ const getAllGuarantees = async()=>{
       setMainCategories([]);
     }
   };
+  useEffect(() => {
+    getAllParentCategories();
+    getAllBrands();
+    getAllColors();
+    getAllGuarantees();
+   
+    //  This code snippet populates the state with the data of the product to be edited.
+
+
+const sanitizedProduct = {};
+
+for (const key in productToEdit) {
+  if (productToEdit[key] === null) {
+    sanitizedProduct[key] = "";
+  } else {
+    sanitizedProduct[key] = productToEdit[key];
+  }
+}
+    if (productToEdit) {
+    // تنظیم مقادیر فرم به شکل کاملاً ایمن
+    setReInitialValue({
+      ...productToEdit,
+      category_ids: productToEdit.categories ? productToEdit.categories.map(c => c.id).join("-") : "",
+      color_ids: productToEdit.colors ? productToEdit.colors.map(c => c.id).join("-") : "",
+      guarantee_ids: (productToEdit.guarantees || productToEdit.gurantees)
+        ? (productToEdit.guarantees || productToEdit.gurantees).map(g => g.id).join("-")
+        : "",
+    });
+
+    // در صورتی که تابع انتخابی‌های اولیه را دارید، اینجا فراخوانی‌اش کنید:
+    if (typeof setInitialSelectedValues === "function") {
+      setInitialSelectedValues();
+    }
+  } else {
+    setReInitialValue(null);
+  }
+}, [productToEdit]);
+
+const setInitialSelectedValues = () => {
+  if (productToEdit) {
+    setSelectedCategories(productToEdit.categories.map(c => { return { id: c.id, value: c.title } }))
+    setSelectedColors(productToEdit.colors.map(c => { return { id: c.id, value: c.title } }))
+    setSelectedGuarantees(productToEdit.guarantees.map(c => { return { id: c.id, value: c.title } }))
+  }
+}
+
 
   return (
     <>
       <Formik
-        initialValues={initialValues}
-        onSubmit={(values, actions) => onSubmit(values, actions)}
+        initialValues={reInitialValues || initialValues}
+        onSubmit={(values, actions) => {
+          onSubmit(values, actions,productToEdit,navigate)}}
         validationSchema={validationSchema}
+        enableReinitialize
       >
-        {(formik) => {
-          return (
+        {
+           formik => {
+             return (
             <Form>
-              <div className="container mb-5">
-                <h4 className="text-center my-3 ">افزودن محصول جدید</h4>
+              <div className="container mb-5 pt-5 mt-4">
+                <h4 className="text-center my-3 ">
+                {
+                  productToEdit ? (
+                    <>
+                    ویرایش محصول :
+                    <span className="text-primary">{productToEdit.title}</span>
+                    </>
+                  ):"افزودن محصول جدید"}</h4>
+
                 <div className="text-left col-md-6 col-lg-8 m-auto my-3">
                   <PrevPageButton />
                 </div>
@@ -124,22 +180,20 @@ const getAllGuarantees = async()=>{
                   ) : null}
                   <FormikControl
                     control="searchableSelect"
-                    options={
-                      typeof mainCategories == "object" ? mainCategories : []
-                    }
+                    options={ typeof mainCategories == "object" ? mainCategories : []                    }
                     label="دسته اصلی"
                     name="category_ids"
                     firstItem="دسته  مورد نظر را انتخاب کنید"
                     resultType="string"
-                      className="col-md-6 col-lg-8" // 👈 این کلاس باید اضافه شود تا نصف عرض شود
-
+                    className="col-md-6 col-lg-8" // 👈 این کلاس باید اضافه شود تا نصف عرض شود
+                    initialItems = {selectedCategories}
                   />
 
                   <FormikControl
                     label="عنوان *"
                     className="col-md-6 col-lg-8"
                     control="input"
-                    name="tilte"
+                    name="title"
                     type="text"
                     placeholder="فقط از حروف و اعداد استفاده کنید"
                   />
@@ -150,7 +204,7 @@ const getAllGuarantees = async()=>{
                     control="input"
                     type="number"
                     name="price"
-                    placeholder="  (تومان(فقط از اعداد استفاده کنید"
+                    placeholder="تومان (فقط از اعداد استفاده کنید)"
                   />
 
                   <FormikControl
@@ -167,7 +221,7 @@ const getAllGuarantees = async()=>{
                     className="col-md-6 col-lg-8"
                     control="select"
                     options={brands}
-                    name="brand_id"
+                    name="brand_ids"
                     firstItem="برند مورد نظر را انتخاب کنید"
                   />
 
@@ -176,9 +230,11 @@ const getAllGuarantees = async()=>{
                     className="col-md-6 col-lg-8"
                     control="searchableSelect"
                     options={colors}
-                    name="color_id"
+                    name="color_ids"
                     firstItem="رنگ مورد نظر را انتخاب کنید"
                     resultType="string"
+                    initialItems = {selectedCategories}
+
                   />
 
                   <FormikControl
@@ -186,15 +242,27 @@ const getAllGuarantees = async()=>{
                     className="col-md-6 col-lg-8"
                     control="searchableSelect"
                     options={guarantees}
-                    name="garantee_id"
+                    name="gurantee_ids"
                     firstItem="گارانتی مورد نظر را انتخاب کنید"
                     resultType="string"
+                    initialItems = {selectedCategories}
+
                   />
 
-                  <FormikControl
+                  {/* <FormikControl
                     label="توضیحات"
                     className="col-md-6 col-lg-8"
                     control="textarea"
+                    name="descriptions"
+                    firstItem="فقط از حروف و اعداد استفاده کنید"
+                    resultType="string"
+                  /> */}
+
+                  
+                  <FormikControl
+                    label="توضیحات"
+                    className="col-md-6 col-lg-8"
+                    control="quilleditor"
                     name="descriptions"
                     firstItem="فقط از حروف و اعداد استفاده کنید"
                     resultType="string"
@@ -214,14 +282,18 @@ const getAllGuarantees = async()=>{
                     name="cart_descriptions"
                     placeholder="فقط از حروف و اعداد استفاده کنید"
                   />
-
-                  <FormikControl
+{/* We set a condition that the product image should not be edited while editing the product. */}
+           {       
+            !productToEdit ? (
+                 <FormikControl
                     label="تصویر"
                     className="col-md-6 col-lg-8"
                     control="file"
                     name="image"
                     placeholder="تصویر"
                   />
+            ):null
+          }
                   <FormikControl
                     label="توضیح تصویر"
                     className="col-md-6 col-lg-8"
@@ -256,13 +328,10 @@ const getAllGuarantees = async()=>{
                     placeholder="فقط از اعداد استفاده کنید"
                   />
 
-                  <div className="btn_box text-center col-12 col-md-6 col-lg-8 mt-4">
+                  <div className="btn_box text-center col-12 col-md-6 col-lg-8 mt-4 p-5">
                     <SubmitButton />
-                    <PrevPageButton className="me-2" />
+                     <PrevPageButton className="me-2" />
                   </div>
-
-
-
                 </div>
               </div>
             </Form>

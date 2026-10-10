@@ -16,4 +16,27 @@ export const deleteProductService = (productId) =>{
 }
 
 
+export const editProductService = (productId, data) => {
+  return httpService(`/admin/products/${productId}`, 'put', data);
+};
 
+
+export const addProductImage = (productId, data) => {
+  return httpService(
+    `/admin/products/${productId}/add_image`,
+    'post',
+    data,
+    {
+      "Content-Type": "multipart/form-data",
+    }
+  );
+};
+
+
+export const deleteProductImageService = (imageId) => {
+  return httpService(`/admin/products/gallery/${imageId}`, 'delete')
+}
+
+export const setMainProductImageService = (imageId) => {
+  return httpService(`/admin/products/gallery/set_main/${imageId}`, 'get')
+}

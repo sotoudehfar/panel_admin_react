@@ -5,6 +5,7 @@ import SearchableSelect from "./SearchableSelect";
 import Select from "./Select";
 import Switch from "./Switch";
 import Textarea from "./Textarea";
+import Quilleditor from "./Quilleditor";
 
 const FormikControl = (props) =>{
 
@@ -23,6 +24,8 @@ switch(props.control){
         return <File {...props}/>
     case "switch":
         return <Switch {...props}/>
+    case "quilleditor":
+        return <Quilleditor {...props}/>
     default:
         return null
 

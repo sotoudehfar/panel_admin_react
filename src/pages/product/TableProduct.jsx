@@ -3,7 +3,6 @@ import PaginatedDataTable from "../../components/authForm/PaginatedDataTable";
 import Actions from "./Actions";
 import { deleteProductService, getProductsService } from "../../services/product";
 import { AlertForm, Confirm } from "../../layout/util/AlertForm";
-import { Link } from "react-router-dom";
 import AddButtonLink from "../../components/authForm/form/AddButtonLink";
 
 export default function TableProduct() {
@@ -17,8 +16,9 @@ export default function TableProduct() {
  const dataInfo = [
   {field:"id", title :"#"},
   {field: null, title:"گروه محصول",
-elements: (rowData) => rowData.categories?.[0]?.title || "بدون گروه",  },
-  {field:"title", title:"عنوان"},
+    elements: (rowData) => rowData.categories?.[0]?.title || "بدون گروه",  },
+  
+{field:"title", title:"عنوان"},
   {field:"price", title:"قیمت"},
   {field:"stock", title:"موجودی"},
   {field:null, title:"عملیات",

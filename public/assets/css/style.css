@@ -1,3 +1,5 @@
+@import '@ckeditor/ckeditor5-theme-lark/theme/ckeditor5.css';
+
 @font-face{
     font-family: "BYekan";
     src: url("../fonts/yekan/BYekan-webfont.eot") format("eot"),
@@ -268,6 +270,45 @@ td , th {
         background-color: #6c757d  !important;
         width: 100px;
     }
+}
+.font_1_5 { font-size: 1.5rem; }
+.font_1_2 { font-size: 1.2rem; }
+
+.main_image{
+    border-bottom:1px solid green !important;
+}
+
+.add_image_gallery, .image_gallery {
+    width : 200px;
+    height :200px;
+}
+
+.image_action_container{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: rgba((255),255,255,0.699);
+    left:0;
+    top:0;
+    transition: all 200ms ease;
+    transform: scale(0);
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.image_gallery:hover .image_action_container {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.opacity_0 {
+    opacity: 0 !important;
+}
+.disabled{
+    pointer-events: none !important;
+    opacity: 0.5;
 }
 
 /* sidebar start------->>>>>>> */

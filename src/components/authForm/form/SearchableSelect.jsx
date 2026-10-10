@@ -7,8 +7,9 @@ export default function SearchableSelect({
   options = [],
   name,
   label,
-  className = "",
-  firstItem = "انتخاب کنید...",
+  className ,
+  firstItem ,
+  initialItems
 }) {
   const [selectedItems, setSelectedItems] = useState([]);
   const [showItems, setShowItems] = useState(false);
@@ -46,6 +47,7 @@ export default function SearchableSelect({
     });
   };
 
+  useEffect(()=>{setSelectedItems(initialItems)} , [initialItems])
   // آپدیت گزینه‌ها با تغییر پراپ options
   useEffect(() => {
     setCopyOptions(options);
