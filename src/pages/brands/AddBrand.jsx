@@ -1,11 +1,11 @@
 import { Form, Formik } from "formik";
-import ModalsContainer from "../../components/ModalsContainer";
 
 import FormikControl from "../../components/authForm/form/FormikControl";
 import SubmitButton from "../../components/authForm/form/SubmitButton";
 import {  validationSchema , onSubmit, initialValues} from "./core";
 import { useEffect, useState } from "react";
 import { apiPath } from "../../services/httpService";
+import ModalsContainer from "../../components/authForm/form/ModalsContainer";
 
 export default function AddBrand({setData, brandToEdit, setBrandToEdit}) {
   const [reInitialValues, setReInitialValues]=useState(null)

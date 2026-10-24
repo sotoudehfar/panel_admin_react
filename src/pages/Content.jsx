@@ -22,6 +22,7 @@ import Attributs from "./category/attr/Attributs";
 import Garanties from "./garanties/Guaranties.jsx";
 import AddProduct from "./product/AddProduct.jsx";
 import ProductGallery from "./product/ProductGallery.jsx";
+import AddDiscounts from "./discounts/AddDiscounts.jsx";
 
 export default function Content() {
   const { showSidebar } = useContext(AdminContext);
@@ -34,13 +35,15 @@ export default function Content() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/category" element={<Category />}>
-          {/* روت فرزند: مسیر نسبی بدون اسلش اول و تکرار کلمه category */}
           <Route path=":categoryId" element={<CategoryChildren />} />
         </Route>
         <Route path="/product" element={<Product />} />
-        <Route path="/product/add-product" element={<AddProduct/>}/>
-        <Route path="/product/gallery" element={<ProductGallery/>}/>
-        <Route path="/category/:categoryId/attributes" element={<Attributs />} />
+        <Route path="/product/add-product" element={<AddProduct />} />
+        <Route path="/product/gallery" element={<ProductGallery />} />
+        <Route
+          path="/category/:categoryId/attributes"
+          element={<Attributs />}
+        />
         <Route path="/colors" element={<Colors />} />
         <Route path="/garanties" element={<Garanties />} />
         <Route path="/brands" element={<Brands />} />
@@ -52,7 +55,9 @@ export default function Content() {
         <Route path="/rolls" element={<Rolles />} />
         <Route path="/questions" element={<Questions />} />
         <Route path="/permissions" element={<Permissions />} />
-        <Route path="/discounts" element={<Discounts />} />
+        <Route path="/discounts" element={<Discounts />}>
+          <Route path="add-discount-code" element={<AddDiscounts />} />
+        </Route>
         <Route path="/logout" element={<Logout />} />
         <Route path="*" element={<Dashboard />} /> /*if user enter other word
         redirect to dashbord*/

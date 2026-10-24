@@ -1,4 +1,4 @@
-import AddDeltailOrder from "./AddDeltailOrder";
+import AddDetailOrder from "./AddDetailOrder";
 import AddOrders from "./AddOrders";
 import OrdersTables from "./OrdersTables";
 
@@ -23,7 +23,7 @@ export default function Orders() {
           </div>
           <div className="col-2 col-md-6 col-lg-4 d-flex flex-column align-items-end">
             <AddOrders />
-            <AddDeltailOrder/>
+            <AddDetailOrder/>
           </div>
         </div>
         <OrdersTables />

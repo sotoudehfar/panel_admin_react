@@ -1,4 +1,4 @@
-import ModalsContainer from "../../components/ModalsContainer";
+import ModalsContainer from "../../components/authForm/form/ModalsContainer";
 
 export default function AddComment() {
   return (

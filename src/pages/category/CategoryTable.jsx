@@ -64,23 +64,25 @@ const handleDeleteCategory = async (rowData) => {
     { field: "id", title: "#" },
     { field: "title", title: "عنوان محصول" },
     { field: "parent_id", title: "والد" },
-  
-  ];
-
-  const additionField = [
-    {
+      {
+        field:null,
       title: "تاریخ",
       elements: (rowData) => convertDate(rowData.created_at) ,
     },
     {
+      field:null,
       title: "نمایش در منو",
       elements: (rowData) => <ShowInMenu rowData={rowData} />,
     },
     {
+      field:null,
       title: "عملیات",
       elements: (rowData) => <Action rowData={rowData} handleDeleteCategory = {handleDeleteCategory}/>,
     },
+  
   ];
+
+
 
   const searchParams = {
     title: "جستجو",
@@ -94,7 +96,6 @@ const handleDeleteCategory = async (rowData) => {
       <PaginatedTable
         data={data}
         dataInfo={dataInfo}
-        additionField={additionField}
         searchParams={searchParams}
         numOfPage={8}
         loading={loading}

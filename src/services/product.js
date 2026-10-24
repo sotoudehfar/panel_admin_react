@@ -32,6 +32,10 @@ export const addProductImage = (productId, data) => {
   );
 };
 
+export const getAllProductTitlesService = () => {
+    return httpService(`/admin/products/all_titles`, "get");
+};
+
 
 export const deleteProductImageService = (imageId) => {
   return httpService(`/admin/products/gallery/${imageId}`, 'delete')

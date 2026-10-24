@@ -1,8 +1,8 @@
 import { Form, Formik } from "formik";
-import ModalsContainer from "../../components/ModalsContainer";
 import { initialValues, onSubmit, validationSchema } from "./core";
 import FormikControl from "../../components/authForm/form/FormikControl";
 import { useEffect, useState } from "react";
+import ModalsContainer from "../../components/authForm/form/ModalsContainer";
 
 export default function AddGuaranty({  setData,  guaranteeToEdit,  setGuaranteetoEdit})
  {

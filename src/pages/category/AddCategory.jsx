@@ -1,5 +1,4 @@
 import { Form, Formik } from "formik";
-import ModalsContainer from "../../components/ModalsContainer";
 import FormikControl from "../../components/authForm/form/FormikControl";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -11,6 +10,7 @@ import SubmitButton from "../../components/authForm/form/SubmitButton";
 import { useParams } from "react-router-dom";
 import { CategoryContext } from "../../context/categoryContext";
 import { initialValue, onSubmit, validationSchema } from "./core";
+import ModalsContainer from "../../components/authForm/form/ModalsContainer";
 
 export default function AddCategory({ setForceRender }) {
   const params = useParams();

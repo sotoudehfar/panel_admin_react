@@ -1,6 +1,6 @@
-import ModalsContainer from "../../components/ModalsContainer";
+import ModalsContainer from "../../components/authForm/form/ModalsContainer";
 
-export default function AddDeltailOrder() {
+export default function AddDetailOrder() {
   return (
     <>
       <ModalsContainer

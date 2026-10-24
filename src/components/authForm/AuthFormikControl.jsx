@@ -1,8 +1,8 @@
 
 
 
+import Input from "./form/Input";
 import Switch from "./form/Switch";
-import Input from "./Input";
 
 
 const AuthFormikControl = (props) => {
